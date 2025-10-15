@@ -1,4 +1,4 @@
-# Modelo de projeto de ciência de dados
+# California House Prediction Model
 
 Modelo de projeto de ciência de dados para ser utilizado como referência em projetos
 futuros. Desenvolvido por mim, [Francisco Bustamante](https://github.com/chicolucio),
