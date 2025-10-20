@@ -46,7 +46,7 @@ This project focuses on predicting housing prices in California using machine le
 
 ## More About the Dataset
 
-[Click here](references\data_dictionary.md) to view the data dictionary
+[Click here](references/data_dictionary.md) to view the data dictionary
 
 ## Summary of Key Results
 
