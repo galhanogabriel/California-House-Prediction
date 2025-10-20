@@ -34,16 +34,17 @@ def load_geo_data():
     # Apply the fix and orientation function to geometries
     gdf_geo["geometry"] = gdf_geo["geometry"].apply(fix_and_orient_geometry)
 
-    # Extract polygon coordinates
+    # Extract polygon coordinates for optional use (keep geometry column untouched)
     def get_polygon_coordinates(geometry):
-        return (
-            [[[x, y] for x, y in geometry.exterior.coords]]
-            if isinstance(geometry, shapely.geometry.Polygon)
-            else [
-                [[x, y] for x, y in polygon.exterior.coords]
+        if isinstance(geometry, shapely.geometry.Polygon):
+            return [[list(coord) for coord in geometry.exterior.coords]]
+        elif isinstance(geometry, shapely.geometry.MultiPolygon):
+            return [
+                [list(coord) for coord in polygon.exterior.coords]
                 for polygon in geometry.geoms
             ]
-        )
+        else:
+            return None
 
     # Apply the coordinate conversion and store in a new column
     gdf_geo["geometry"] = gdf_geo["geometry"].apply(get_polygon_coordinates)
