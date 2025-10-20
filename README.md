@@ -10,7 +10,7 @@ This project focuses on predicting housing prices in California using machine le
 
 ```
 ├── .gitignore         <- Files and directories to be ignored by Git.
-├── environment.yml    <- The requirements file to reproduce the analysis environment.
+├── requirements.txt   <- The requirements file to reproduce the analysis environment.
 ├── LICENSE            <- Open source license (MIT).
 ├── README.md          <- Main README for developers using this project.
 |
