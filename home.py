@@ -17,6 +17,8 @@ def load_clean_data():
 def load_geo_data():
     gdf_geo = gpd.read_parquet(GEO_MEDIAN_DATA)
 
+    gdf_geo = gpd.GeoDataFrame(gdf_geo, geometry="geometry", crs="EPSG:4326")
+
     # Explode MultiPolygons into individual polygons
     gdf_geo = gdf_geo.explode(ignore_index=True)
 
@@ -47,7 +49,7 @@ def load_geo_data():
             return None
 
     # Apply the coordinate conversion and store in a new column
-    gdf_geo["geometry"] = gdf_geo["geometry"].apply(get_polygon_coordinates)
+    gdf_geo["coordinates"] = gdf_geo["geometry"].apply(get_polygon_coordinates)
 
     return gdf_geo
 
@@ -128,8 +130,8 @@ with column2:
 
     polygon_layer = pdk.Layer(
         "PolygonLayer",
-        data=gdf_geo[["name", "geometry"]],
-        get_polygon="geometry",
+        data=gdf_geo[["name", "coordinates"]],
+        get_polygon="coordinates",
         get_fill_color=[0, 0, 255, 100],
         get_line_color=[255, 255, 255],
         get_line_width=50,
@@ -140,8 +142,8 @@ with column2:
 
     highlight_layer = pdk.Layer(
         "PolygonLayer",
-        data=selected_county[["name", "geometry"]],
-        get_polygon="geometry",
+        data=selected_county[["name", "coordinates"]],
+        get_polygon="coordinates",
         get_fill_color=[255, 0, 0, 100],
         get_line_color=[0, 0, 0],
         get_line_width=500,
