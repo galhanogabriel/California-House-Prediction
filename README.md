@@ -1,86 +1,55 @@
 # California House Prediction Model
 
-Modelo de projeto de ciência de dados para ser utilizado como referência em projetos
-futuros. Desenvolvido por mim, [Francisco Bustamante](https://github.com/chicolucio),
-para alunos iniciantes em ciência de dados de meus cursos e mentorias.
+Source: https://www.kaggle.com/datasets/camnugent/california-housing-prices/data
 
-Inspiração: [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/)
+This dataset was derived from the 1990 U.S. Census, using one row per census block group. A block group is the smallest geographical unit for which the U.S. Census Bureau publishes sample data (a block group typically has a population of 600 to 3,000 people).
 
-Clique no botão **Use this template** para criar um novo repositório com base neste modelo.
+This project focuses on predicting housing prices in California using machine learning techniques based on data from the 1990 U.S. Census. The dataset includes demographic, geographic, and housing-related attributes for each census block group — the smallest unit for which the Census Bureau publishes sample data. By analyzing features such as median income, house age, population density, and proximity to the ocean, the model aims to estimate the median house value within each area. In addition to predictive modeling, the project incorporates interactive maps to visualize regional price patterns and explore how socioeconomic and geographic factors influence housing values across California.
 
-## Organização do projeto
+## Project Organization
 
 ```
-├── .env               <- Arquivo de variáveis de ambiente (não versionar)
-├── .gitignore         <- Arquivos e diretórios a serem ignorados pelo Git
-├── ambiente.yml       <- O arquivo de requisitos para reproduzir o ambiente de análise
-├── LICENSE            <- Licença de código aberto se uma for escolhida
-├── README.md          <- README principal para desenvolvedores que usam este projeto.
+├── .gitignore         <- Files and directories to be ignored by Git.
+├── environment.yml    <- The requirements file to reproduce the analysis environment.
+├── LICENSE            <- Open source license (MIT).
+├── README.md          <- Main README for developers using this project.
 |
-├── dados              <- Arquivos de dados para o projeto.
+├── dados              <- Data files for the project.
 |
-├── modelos            <- Modelos treinados e serializados, previsões de modelos ou resumos de modelos
+├── models             <- Trained and Serialized Models, Model Predictions, or Model Summaries.
 |
-├── notebooks          <- Cadernos Jupyter. A convenção de nomenclatura é um número (para ordenação),
-│                         as iniciais do criador e uma descrição curta separada por `-`, por exemplo
-│                         `01-fb-exploracao-inicial-de-dados`.
+├── notebooks          <- Jupyter Notebooks.
 │
-|   └──src             <- Código-fonte para uso neste projeto.
+|   └──src             <- Source code for use in this project.
 |      │
-|      ├── __init__.py  <- Torna um módulo Python
-|      ├── config.py    <- Configurações básicas do projeto
-|      └── graficos.py  <- Scripts para criar visualizações exploratórias e orientadas a resultados
+|      ├── __init__.py  <- Makes it a Python module.
+|      ├── config.py    <- Basic project settings.
+|      ├── graficos.py  <- Scripts for Exploratory and Outcome-Oriented Visualizations.
+|      └── helpers.py   <- Functions created specifically for this project.
 |
-├── referencias        <- Dicionários de dados, manuais e todos os outros materiais explicativos.
-|
-├── relatorios         <- Análises geradas em HTML, PDF, LaTeX, etc.
-│   └── imagens        <- Gráficos e figuras gerados para serem usados em relatórios
+├── references        <- Data dictionaries.
 ```
 
-## Configuração do ambiente
+## Environment Setup
 
-1. Faça o clone do repositório que será criado a partir deste modelo.
+1. Clone the repository that will be created from this template.
 
     ```bash
-    git clone ENDERECO_DO_REPOSITORIO
+    git clone git@github.com:galhanogabriel/California-House-Prediction.git
     ```
 
-2. Crie um ambiente virtual para o seu projeto utilizando o gerenciador de ambientes de sua preferência.
-
-    a. Caso esteja utilizando o `conda`, exporte as dependências do ambiente para o arquivo `ambiente.yml`:
+2. Create a virtual environment for your project using conda.
 
       ```bash
-      conda env export > ambiente.yml
+      conda env create -f ambiente.yml --name machine_learning_project
       ```
 
-    b. Caso esteja utilizando outro gerenciador de ambientes, exporte as dependências
-    para o arquivo `requirements.txt` ou outro formato de sua preferência. Adicione o
-    arquivo ao controle de versão, removendo o arquivo `ambiente.yml`.
+## More About the Dataset
 
-3. Verifique o arquivo `notebooks/01-fb-exemplo.ipynb` para exemplos
-de uso do código.
-4. Renomeie o arquivo `notebooks/01-fb-exemplo.ipynb` para um nome
-mais apropriado ao seu projeto. E siga a convenção de nomenclatura para os demais
-notebooks.
-5. Remova arquivos de exemplo e adicione os arquivos de dados e notebooks do seu
-projeto.
-6. Verifique o arquivo `notebooks/src/config.py` para configurações básicas do projeto.
-Modifique conforme necessário, adicionando ou removendo caminhos de arquivos e
-diretórios.
-7. Atualize o arquivo `referencias/01_dicionario_de_dados.md` com o dicionário de dados
-do seu projeto.
-8. Atualize o `README.md` com informações sobre o seu projeto.
-9. Adicione uma licença ao projeto. Clique
-[aqui](https://docs.github.com/pt/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)
-se precisar de ajuda para escolher uma licença.
-10. Renomeie o arquivo `.env.exemplo` para `.env`
-11. Adicione variáveis de ambiente sensíveis ao arquivo `.env`.
+[Click here](references\data_dictionary.md) to view the data dictionary
 
-Por padrão, o arquivo `.gitignore` já está configurado para ignorar arquivos de dados e
-arquivos de Notebook (para aqueles que usam ferramentas como
-[Jupytext](https://jupytext.readthedocs.io/en/latest/) e similares). Adicione ou remova
-outros arquivos e diretórios do `.gitignore` conforme necessário. Caso deseje adicionar
-forçadamente um Notebook ao controle de versão, faça um commit forçado com o
-comando `git add --force NOME_DO_ARQUIVO.ipynb`.
+## Summary of Key Results
 
-Para mais informações sobre como usar Git e GitHub, [clique aqui](https://cienciaprogramada.com.br/2021/09/guia-definitivo-git-github/). Sobre ambientes virtuais, [clique aqui](https://cienciaprogramada.com.br/2020/08/ambiente-virtual-projeto-python/).
+The modeling process demonstrated that using a RobustScaler for preprocessing numerical features yielded the best performance, effectively handling outliers common in housing data. Incorporating polynomial features (up to degree 3) allowed the model to capture more complex relationships without overfitting, while Ridge regularization balanced model flexibility and stability by shrinking less relevant coefficients instead of eliminating them. 
+
+The results highlighted that median income and location (latitude and longitude) were the most influential factors in predicting house values, with geographic features often interacting with other variables. Although the Ridge model was computationally slower than simpler baselines like Dummy and Linear Regression, it achieved superior predictive metrics and demonstrated improved alignment between predicted and actual values. Further optimization could be explored, but substantial performance gains are unlikely beyond this stage.

@@ -14,7 +14,3 @@ GEO_MEDIAN_DATA = DATA_FOLDER / "geo_median.parquet"
 # Place the path to your project's model files below.
 MODELS_FOLDER = PROJECT_FOLDER / "models"
 FINAL_MODEL = MODELS_FOLDER / "ridge_polyfeat_target_quantile.joblib"
-
-# Place below any other paths you deem necessary.
-REPORTS_FOLDER = PROJECT_FOLDER / "reports"
-IMAGES_FOLDER = REPORTS_FOLDER / "images"
