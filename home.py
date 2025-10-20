@@ -56,42 +56,42 @@ def load_model():
 
 df = load_clean_data()
 gdf_geo = load_geo_data()
-modelo = load_model()
+model = load_model()
 
-st.title("Previsão de preços de imóveis")
+st.title("Housing Price Prediction")
 
 counties = sorted(gdf_geo["name"].unique())
 
-coluna1, coluna2 = st.columns(2)
+column1, column2 = st.columns(2)
 
-with coluna1:
+with column1:
 
-    with st.form(key="formulario"):
+    with st.form(key="form"):
 
-        selecionar_condado = st.selectbox("Condado", counties)
+        select_county = st.selectbox("Counties", counties)
 
-        longitude = gdf_geo.query("name == @selecionar_condado")["longitude"].values
-        latitude = gdf_geo.query("name == @selecionar_condado")["latitude"].values
+        longitude = gdf_geo.query("name == @select_county")["longitude"].values
+        latitude = gdf_geo.query("name == @select_county")["latitude"].values
 
-        housing_median_age = st.number_input("Idade do imóvel", value=10, min_value=1, max_value=50)
+        housing_median_age = st.number_input("House Age", value=10, min_value=1, max_value=50)
 
-        total_rooms = gdf_geo.query("name == @selecionar_condado")["total_rooms"].values
-        total_bedrooms = gdf_geo.query("name == @selecionar_condado")["total_bedrooms"].values
-        population = gdf_geo.query("name == @selecionar_condado")["population"].values
-        households = gdf_geo.query("name == @selecionar_condado")["households"].values
+        total_rooms = gdf_geo.query("name == @select_county")["total_rooms"].values
+        total_bedrooms = gdf_geo.query("name == @select_county")["total_bedrooms"].values
+        population = gdf_geo.query("name == @select_county")["population"].values
+        households = gdf_geo.query("name == @select_county")["households"].values
 
-        median_income = st.slider("Renda média (milhares de US$)", 5.0, 100.0, 45.0, 5.0)
+        median_income = st.slider("Median Income (in US$ 1000s)", 5.0, 100.0, 45.0, 5.0)
 
-        ocean_proximity = gdf_geo.query("name == @selecionar_condado")["ocean_proximity"].values
+        ocean_proximity = gdf_geo.query("name == @select_county")["ocean_proximity"].values
 
         bins_income = [0, 1.5, 3, 4.5, 6, np.inf]
         median_income_cat = np.digitize(median_income / 10, bins=bins_income)
 
-        rooms_per_household = gdf_geo.query("name == @selecionar_condado")["rooms_per_household"].values
-        bedrooms_per_room = gdf_geo.query("name == @selecionar_condado")["bedrooms_per_room"].values
-        population_per_household = gdf_geo.query("name == @selecionar_condado")["population_per_household"].values
+        rooms_per_household = gdf_geo.query("name == @select_county")["rooms_per_household"].values
+        bedrooms_per_room = gdf_geo.query("name == @select_county")["bedrooms_per_room"].values
+        population_per_household = gdf_geo.query("name == @select_county")["population_per_household"].values
 
-        entrada_modelo = {
+        model_entry = {
             "longitude": longitude,
             "latitude": latitude,
             "housing_median_age": housing_median_age,
@@ -107,15 +107,15 @@ with coluna1:
             "population_per_household": population_per_household,
         }
 
-        df_entrada_modelo = pd.DataFrame(entrada_modelo)
+        df_model_entry = pd.DataFrame(model_entry)
 
-        botao_previsao = st.form_submit_button("Prever preço")
+        predict_button = st.form_submit_button("Predict Price")
 
-    if botao_previsao:
-        preco = modelo.predict(df_entrada_modelo)
-        st.metric(label="Preço previsto: (US$)", value=f"{preco[0][0]:.2f}")
+    if predict_button:
+        price = model.predict(df_model_entry)
+        st.metric(label="Predicted Price: (US$)", value=f"{price[0][0]:.2f}")
 
-with coluna2:
+with column2:
 
     view_state = pdk.ViewState(
         latitude=float(latitude[0]),
@@ -135,11 +135,11 @@ with coluna2:
         pickable=True,
         auto_highlight=True,
     )
-    condando_selecionado = gdf_geo.query("name == @selecionar_condado")
+    selected_county = gdf_geo.query("name == @select_county")
 
     highlight_layer = pdk.Layer(
         "PolygonLayer",
-        data=condando_selecionado[["name", "geometry"]],
+        data=selected_county[["name", "geometry"]],
         get_polygon="geometry",
         get_fill_color=[255, 0, 0, 100],
         get_line_color=[0, 0, 0],
@@ -149,15 +149,15 @@ with coluna2:
     )
 
     tooltip = {
-        "html": "<b>Condado:</b> {name}",
+        "html": "<b>County:</b> {name}",
         "style": {"backgroundColor": "steelblue", "color": "white", "fontsize": "10px"},
     }
 
-    mapa = pdk.Deck(
+    map = pdk.Deck(
         initial_view_state=view_state,
         map_style="light",
         layers=[polygon_layer, highlight_layer],
         tooltip=tooltip
     )
 
-    st.pydeck_chart(mapa)
+    st.pydeck_chart(map)
