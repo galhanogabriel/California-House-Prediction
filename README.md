@@ -41,12 +41,16 @@ This project focuses on predicting housing prices in California using machine le
 2. Create a virtual environment for your project using conda.
 
       ```bash
-      conda env create -f ambiente.yml --name machine_learning_project
+      conda env create -f environment.yml --name machine_learning_project
       ```
 
 ## More About the Dataset
 
 [Click here](references/data_dictionary.md) to view the data dictionary
+
+## The Streamlit App
+
+[Click here]((https://california-house-prediction.streamlit.app/))
 
 ## Summary of Key Results
 
