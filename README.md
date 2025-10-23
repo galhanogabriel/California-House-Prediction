@@ -50,7 +50,7 @@ This project focuses on predicting housing prices in California using machine le
 
 ## The Streamlit App
 
-[Click here]((https://california-house-prediction.streamlit.app/))
+[Click here](https://california-house-prediction.streamlit.app/) to use the app
 
 ## Summary of Key Results
 
